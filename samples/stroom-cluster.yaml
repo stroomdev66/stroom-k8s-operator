@@ -14,7 +14,7 @@ spec:
   appDatabaseName: stroom
   statsDatabaseName: stats
   ingress:
-    hostName: stroom.example.com
+    hostName: a21ccf6caa1834b769b05b7f7be591c8-790026f529a4503d.elb.eu-west-2.amazonaws.com
     secretName: stroom-tls
     className: nginx
   nodeTerminationPeriodSecs: 300
@@ -34,18 +34,18 @@ spec:
       count: 3
       role: Processing
       localDataVolumeClaim:
-        storageClassName: ""
+        storageClassName: "ebs"
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
             storage: 1Gi
-          limits:
-            storage: 1Gi
-        selector:
-          matchLabels:
-            app: stroom
-            component: stroom-node
+          #limits:
+          #  storage: 1Gi
+        #selector:
+        #  matchLabels:
+        #    app: stroom
+        #    component: stroom-node
       ingressEnabled: true
       readinessProbeTimings: {}
       livenessProbeTimings: {}
@@ -56,9 +56,9 @@ spec:
         requests:
           cpu: 500m
           memory: 2Gi
-        limits:
-          cpu: "2"
-          memory: 8Gi
+        #limits:
+        #  cpu: "2"
+        #  memory: 8Gi
       podAnnotations: {}
       podSecurityContext:
         runAsNonRoot: true
@@ -72,7 +72,7 @@ spec:
       count: 1
       role: Frontend
       localDataVolumeClaim:
-        storageClassName: ""
+        storageClassName: "ebs"
         accessModes:
           - ReadWriteOnce
         resources:
@@ -80,10 +80,10 @@ spec:
             storage: 1Gi
           limits:
             storage: 1Gi
-        selector:
-          matchLabels:
-            app: stroom
-            component: stroom-node
+        #selector:
+        #  matchLabels:
+        #    app: stroom
+        #    component: stroom-node
       ingressEnabled: true
       ingressAnnotations:
         nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
@@ -105,7 +105,7 @@ spec:
   extraVolumes:
     - name: shared
       nfs:
-        server: stroom.fs.example.com
+        server: fs-00a2f743f6b356759.efs.eu-west-2.amazonaws.com
         path: /data/stroom/stroom-shared
   extraVolumeMounts:
     - name: shared

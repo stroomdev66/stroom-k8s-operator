@@ -19,10 +19,10 @@ spec:
       cpu: 2000m
       memory: 2Gi
   volumeClaim:
-    volumeName: stroom-db
+    #volumeName: stroom-db
     accessModes:
       - ReadWriteOnce
-    storageClassName: ""
+    storageClassName: "ebs"
     resources:
       requests:
         storage: 200Mi
